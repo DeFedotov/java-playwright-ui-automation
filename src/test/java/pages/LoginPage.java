@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginPage extends BasePage {
 
-    Locator subTitle = page.locator(".display-6");
     Locator loginInput = page.locator("#username");
     Locator passwordInput = page.locator("#password");
     Locator submitButton = page.locator("xpath=//button[@type='submit']");
@@ -31,9 +30,8 @@ public class LoginPage extends BasePage {
         submitButton.click();
     }
 
-    @Step("Verify successfully login")
-    public void verifySuccessfullLogin() {
-        assertThat(successMessage.isVisible()).isTrue();
-        assertThat(successMessage.innerText()).isEqualTo("Login successful");
+    @Step("Get success message text")
+    public String getSuccessMessage() {
+        return successMessage.textContent();
     }
 }
