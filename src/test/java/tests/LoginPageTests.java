@@ -13,9 +13,13 @@ public class LoginPageTests extends BaseTest{
     public void loginTest(){
         LoginPage loginPage = new LoginPage(page);
 
-
         loginPage
                 .navigate()
                 .login("user", "user");
+
+        assertThat(page.url()).contains("login-sucess.html");
+        assertThat(loginPage.getSuccessMessage())
+                .isNotBlank()
+                .contains("Login successful");
     }
 }
