@@ -12,6 +12,7 @@ public class LoginPage extends BasePage {
     Locator passwordInput = page.locator("#password");
     Locator submitButton = page.locator("xpath=//button[@type='submit']");
     Locator successMessage = page.locator("#success");
+    Locator errorMessage = page.locator("#invalid");
 
 
     public LoginPage(Page page) {
@@ -33,5 +34,10 @@ public class LoginPage extends BasePage {
     @Step("Get success message text")
     public String getSuccessMessage() {
         return successMessage.textContent();
+    }
+
+    @Step("Get invalid message text")
+    public String getErrorMessage() {
+        return errorMessage.textContent();
     }
 }
