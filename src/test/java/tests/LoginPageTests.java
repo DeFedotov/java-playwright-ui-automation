@@ -35,4 +35,43 @@ public class LoginPageTests extends BaseTest{
         assertThat(page.url()).doesNotContain("login-sucess.html");
         assertThat(loginPage.getErrorMessage()).isNotBlank().doesNotContain("Login successful").contains("Invalid credentials");
     }
+
+    @Test
+    @DisplayName("Empty username login test")
+    public void emptyUsernameLoginTest() {
+        LoginPage loginPage = new LoginPage(page);
+
+        loginPage.navigate().login("", "user");
+
+        assertThat(page.url()).doesNotContain("login-sucess.html");
+        assertThat(loginPage.getErrorMessage())
+                .isNotBlank()
+                .contains("Invalid credentials");
+    }
+
+    @Test
+    @DisplayName("Empty password login test")
+    public void emptyPasswordLoginTest() {
+        LoginPage loginPage = new LoginPage(page);
+
+        loginPage.navigate().login("user", "");
+
+        assertThat(page.url()).doesNotContain("login-sucess.html");
+        assertThat(loginPage.getErrorMessage())
+                .isNotBlank()
+                .contains("Invalid credentials");
+    }
+
+    @Test
+    @DisplayName("Empty fields login test")
+    public void emptyFieldsLoginTest() {
+        LoginPage loginPage = new LoginPage(page);
+
+        loginPage.navigate().login("", "");
+
+        assertThat(page.url()).doesNotContain("login-sucess.html");
+        assertThat(loginPage.getErrorMessage())
+                .isNotBlank()
+                .contains("Invalid credentials");
+    }
 }
