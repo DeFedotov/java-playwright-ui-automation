@@ -23,7 +23,7 @@ public class BaseTest {
                 .setHeadless(false)
 //                .setChannel("chrome")
 //                .setChannel("msedge")
-                .setSlowMo(3000)
+//                .setSlowMo(3000)
                 .setArgs(List.of(
                         "--no-sandbox",
                         "--disable-setuid-sandbox",
