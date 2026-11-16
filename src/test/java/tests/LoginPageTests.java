@@ -17,7 +17,7 @@ public class LoginPageTests extends BaseTest{
 
         loginPage
                 .navigate()
-                .login("user", "user");
+                .login("users", "user");
 
         assertThat(page.url())
                 .contains("login-sucess.html");
