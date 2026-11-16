@@ -1,19 +1,29 @@
 package tests;
 
 import com.microsoft.playwright.*;
+import extensions.AllureExtension;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
+@ExtendWith(AllureExtension.class)
 public class BaseTest {
     protected static Playwright playwright;
     protected static Browser browser;
 
     protected BrowserContext context;
     protected Page page;
+
+    private static final ThreadLocal<BrowserContext> contextThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<Page> pageThreadLocal = new ThreadLocal<>();
+
+    public static Page getPage() {
+        return pageThreadLocal.get();
+    }
 
     @BeforeAll
     static void launchBrowser() {
@@ -37,6 +47,9 @@ public class BaseTest {
         context = browser.newContext(new Browser.NewContextOptions()
                 .setViewportSize(1920, 1080));
         page = context.newPage();
+
+        contextThreadLocal.set(context);
+        pageThreadLocal.set(page);
     }
 
     @AfterEach
@@ -44,6 +57,9 @@ public class BaseTest {
         if (context != null) {
             context.close();
         }
+
+        pageThreadLocal.remove();
+        contextThreadLocal.remove();
     }
 
     @AfterAll
