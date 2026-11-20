@@ -17,7 +17,7 @@ public class LoginPageTests extends BaseTest{
 
     @BeforeEach
     void openLoginPage() {
-        loginPage = new LoginPage(page).navigate();
+        loginPage = new LoginPage(page).navigateToLoginPage();
     }
 
     @Test
