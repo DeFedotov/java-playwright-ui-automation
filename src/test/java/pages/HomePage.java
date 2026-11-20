@@ -10,13 +10,14 @@ public class HomePage extends BasePage {
 
     private final Locator chapterLocator = page.locator("h5.card-title");
     private final Locator titleLocator = page.locator("h1.display-4");
+    private final Locator loginFormLink = page.locator("a[href='login-form.html']");
 
     public  HomePage(Page page) {
         super(page);
     }
 
     @Step("Open Home Page")
-    public HomePage navigateToHomePage() {
+    public HomePage openHomePage() {
         navigateTo(HOME_PAGE_URL);
         return this;
     }
@@ -29,5 +30,11 @@ public class HomePage extends BasePage {
     @Step("Count all chapters on Home Page")
     public int countChapters() {
         return chapterLocator.count();
+    }
+
+    @Step("Open Login Form Page")
+    public LoginPage openLoginFormPage() {
+        loginFormLink.click();
+        return new LoginPage(page);
     }
 }

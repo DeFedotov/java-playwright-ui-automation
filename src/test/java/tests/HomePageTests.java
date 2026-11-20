@@ -13,7 +13,8 @@ public class HomePageTests extends BaseTest {
 
     @BeforeEach
     void openHomePage() {
-        homePage = new HomePage(page).navigateToHomePage();
+        homePage = new HomePage(page)
+                .openHomePage();
     }
 
     @Test

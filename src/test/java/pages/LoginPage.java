@@ -18,11 +18,11 @@ public class LoginPage extends BasePage {
         super(page);
     }
 
-    @Step("Open Login Page")
-    public LoginPage navigateToLoginPage() {
-        navigateTo(LOGIN_FORM_PAGE_URL);
-        return this;
-    }
+//    @Step("Open Login Page")
+//    public LoginPage navigateToLoginPage() {
+//        navigateTo(LOGIN_FORM_PAGE_URL);
+//        return this;
+//    }
 
     @Step("Login as user with username: {username} and password: {password}")
     public void login(String username, String password) {
