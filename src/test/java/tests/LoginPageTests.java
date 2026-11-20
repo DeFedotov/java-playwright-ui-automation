@@ -1,87 +1,114 @@
 package tests;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import pages.LoginPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class LoginPageTests extends BaseTest{
+
+    private static final String EXPECTED_SUCCESS_URL_PART = "login-sucess.html";
+    private static final String EXPECTED_SUCCESS_TEXT = "Login successful";
+    private static final String EXPECTED_ERROR_TEXT = "Invalid credentials";
+
+    private LoginPage loginPage;
+
+    @BeforeEach
+    void openLoginPage() {
+        loginPage = new LoginPage(page).navigate();
+    }
 
     @Test
     @Tag("Smoke")
     @Order(1)
     @DisplayName("Valid login test")
-    public void validLoginTest(){
-        LoginPage loginPage = new LoginPage(page);
+    void validLoginTest(){
 
-        loginPage
-                .navigate()
-                .login("users", "user");
+        loginPage.login("users", "user");
 
         assertThat(page.url())
-                .contains("login-sucess.html");
+                .contains(".*" +  EXPECTED_SUCCESS_URL_PART);
 
         assertThat(loginPage.getSuccessMessage())
                 .isNotBlank()
-                .contains("Login successful");
+                .contains(EXPECTED_SUCCESS_TEXT);
     }
 
     @Test
     @Tag("Smoke")
     @Order(2)
     @DisplayName("Invalid login test")
-    public void invalidLoginTest(){
-        LoginPage loginPage = new LoginPage(page);
+    void invalidLoginTest(){
 
-        loginPage.navigate().login("invalid", "user");
+        loginPage.login("invalid", "user");
 
-        assertThat(page.url()).doesNotContain("login-sucess.html");
-        assertThat(loginPage.getErrorMessage()).isNotBlank().doesNotContain("Login successful").contains("Invalid credentials");
+        assertThat(page.url()).doesNotContain(".*" +  EXPECTED_SUCCESS_URL_PART);
+
+        assertThat(loginPage.getErrorMessage())
+                .isNotBlank()
+                .doesNotContain(EXPECTED_SUCCESS_TEXT)
+                .contains(EXPECTED_ERROR_TEXT);
     }
 
     @Test
     @Tag("Smoke")
     @Order(3)
     @DisplayName("Empty username login test")
-    public void emptyUsernameLoginTest() {
-        LoginPage loginPage = new LoginPage(page);
+    void emptyUsernameLoginTest() {
 
-        loginPage.navigate().login("", "user");
+        loginPage.login("", "user");
 
-        assertThat(page.url()).doesNotContain("login-sucess.html");
+        assertThat(page.url()).doesNotContain(EXPECTED_SUCCESS_TEXT);
         assertThat(loginPage.getErrorMessage())
                 .isNotBlank()
-                .contains("Invalid credentials");
+                .contains(EXPECTED_ERROR_TEXT);
     }
 
     @Test
     @Tag("Smoke")
     @Order(4)
     @DisplayName("Empty password login test")
-    public void emptyPasswordLoginTest() {
-        LoginPage loginPage = new LoginPage(page);
+    void emptyPasswordLoginTest() {
 
-        loginPage.navigate().login("user", "");
+        loginPage.login("user", "");
 
-        assertThat(page.url()).doesNotContain("login-sucess.html");
+        assertThat(page.url()).doesNotContain(".*" +  EXPECTED_SUCCESS_URL_PART);
         assertThat(loginPage.getErrorMessage())
                 .isNotBlank()
-                .contains("Invalid credentials");
+                .contains(EXPECTED_ERROR_TEXT);
     }
 
     @Test
     @Tag("Smoke")
     @Order(5)
     @DisplayName("Empty fields login test")
-    public void emptyFieldsLoginTest() {
-        LoginPage loginPage = new LoginPage(page);
+    void emptyFieldsLoginTest() {
 
-        loginPage.navigate().login("", "");
+        loginPage.login("", "");
 
-        assertThat(page.url()).doesNotContain("login-sucess.html");
+        assertThat(page.url()).doesNotContain(".*" +  EXPECTED_SUCCESS_URL_PART);
         assertThat(loginPage.getErrorMessage())
                 .isNotBlank()
-                .contains("Invalid credentials");
+                .contains(EXPECTED_ERROR_TEXT);
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}")
+    @CsvSource({
+            "Invalid credentials, invalid, user",
+            "Empty username, '', user",
+            "Empty password, user, ''",
+            "Empty username and password, '', ''"
+    })
+    @DisplayName("Parameterized invalid login cases")
+    void invalidLoginCaseTest(String caseName, String username, String password) {
+        loginPage.login(username, password);
+
+        assertThat(page.url()).doesNotContain(EXPECTED_SUCCESS_URL_PART);
+        assertThat(loginPage.getErrorMessage())
+                .isNotBlank()
+                .doesNotContain(EXPECTED_SUCCESS_TEXT)
+                .contains(EXPECTED_ERROR_TEXT);
     }
 }

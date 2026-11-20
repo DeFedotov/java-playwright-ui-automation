@@ -4,23 +4,23 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class LoginPage extends BasePage {
 
-    Locator loginInput = page.locator("#username");
-    Locator passwordInput = page.locator("#password");
-    Locator submitButton = page.locator("xpath=//button[@type='submit']");
-    Locator successMessage = page.locator("#success");
-    Locator errorMessage = page.locator("#invalid");
+    private static final String LOGIN_FORM_PAGE_URL = "https://bonigarcia.dev/selenium-webdriver-java/login-form.html";
 
+    private final Locator loginInput = page.locator("#username");
+    private final Locator passwordInput = page.locator("#password");
+    private final Locator submitButton = page.locator("button[type='submit']");
+    private final Locator successMessage = page.locator("#success");
+    private final Locator errorMessage = page.locator("#invalid");
 
     public LoginPage(Page page) {
         super(page);
     }
 
+    @Step("Open Login Page")
     public LoginPage navigate() {
-        page.navigate("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
+        page.navigate(LOGIN_FORM_PAGE_URL);
         return this;
     }
 
@@ -33,11 +33,11 @@ public class LoginPage extends BasePage {
 
     @Step("Get success message text")
     public String getSuccessMessage() {
-        return successMessage.textContent();
+        return successMessage.innerText();
     }
 
     @Step("Get invalid message text")
     public String getErrorMessage() {
-        return errorMessage.textContent();
+        return errorMessage.innerText();
     }
 }
