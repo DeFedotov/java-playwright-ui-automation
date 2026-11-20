@@ -19,8 +19,8 @@ public class LoginPage extends BasePage {
     }
 
     @Step("Open Login Page")
-    public LoginPage navigate() {
-        page.navigate(LOGIN_FORM_PAGE_URL);
+    public LoginPage navigateToLoginPage() {
+        navigateTo(LOGIN_FORM_PAGE_URL);
         return this;
     }
 
