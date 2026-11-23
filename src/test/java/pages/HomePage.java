@@ -2,11 +2,10 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import constants.Constants;
 import io.qameta.allure.Step;
 
 public class HomePage extends BasePage {
-
-    private static final String HOME_PAGE_URL = "https://bonigarcia.dev/selenium-webdriver-java/";
 
     private final Locator chapterLocator = page.locator("h5.card-title");
     private final Locator titleLocator = page.locator("h1.display-4");
@@ -18,7 +17,7 @@ public class HomePage extends BasePage {
 
     @Step("Open Home Page")
     public HomePage openHomePage() {
-        navigateTo(HOME_PAGE_URL);
+        navigateTo(Constants.BASE_URL);
         return this;
     }
 
