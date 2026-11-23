@@ -6,8 +6,6 @@ import io.qameta.allure.Step;
 
 public class LoginPage extends BasePage {
 
-    private static final String LOGIN_FORM_PAGE_URL = "https://bonigarcia.dev/selenium-webdriver-java/login-form.html";
-
     private final Locator loginInput = page.locator("#username");
     private final Locator passwordInput = page.locator("#password");
     private final Locator submitButton = page.locator("button[type='submit']");
@@ -17,12 +15,6 @@ public class LoginPage extends BasePage {
     public LoginPage(Page page) {
         super(page);
     }
-
-//    @Step("Open Login Page")
-//    public LoginPage navigateToLoginPage() {
-//        navigateTo(LOGIN_FORM_PAGE_URL);
-//        return this;
-//    }
 
     @Step("Login as user with username: {username} and password: {password}")
     public void login(String username, String password) {
