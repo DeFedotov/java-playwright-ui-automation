@@ -17,7 +17,7 @@ public class HomePage extends BasePage {
 
     @Step("Open Home Page")
     public HomePage openHomePage() {
-        navigateTo(Constants.BASE_URL);
+        navigateTo(Constants.HOME_PAGE_URL);
         return this;
     }
 
