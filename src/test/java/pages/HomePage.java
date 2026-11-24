@@ -10,6 +10,7 @@ public class HomePage extends BasePage {
     private final Locator chapterLocator = page.locator("h5.card-title");
     private final Locator titleLocator = page.locator("h1.display-4");
     private final Locator loginFormLink = page.locator("a[href='login-form.html']");
+    private final Locator dragAndDropLink = page.locator("a[href='drag-and-drop.html']");
 
     public  HomePage(Page page) {
         super(page);
@@ -35,5 +36,11 @@ public class HomePage extends BasePage {
     public LoginPage openLoginFormPage() {
         loginFormLink.click();
         return new LoginPage(page);
+    }
+
+    @Step("Open Drag and Drop Page")
+    public DragAndDropPage openDragAndDropPage() {
+        dragAndDropLink.click();
+        return new DragAndDropPage(page);
     }
 }
