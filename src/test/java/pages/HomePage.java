@@ -11,6 +11,7 @@ public class HomePage extends BasePage {
     private final Locator titleLocator = page.locator("h1.display-4");
     private final Locator loginFormLink = page.locator("a[href='login-form.html']");
     private final Locator dragAndDropLink = page.locator("a[href='drag-and-drop.html']");
+    private final Locator iFramesLink = page.locator("a[href='iframes.html']");
 
     public  HomePage(Page page) {
         super(page);
@@ -42,5 +43,11 @@ public class HomePage extends BasePage {
     public DragAndDropPage openDragAndDropPage() {
         dragAndDropLink.click();
         return new DragAndDropPage(page);
+    }
+
+    @Step("Open IFrames page")
+    public IFramePage openIFramePage() {
+        iFramesLink.click();
+        return new IFramePage(page);
     }
 }
