@@ -1,7 +1,5 @@
 package tests;
 
-import com.microsoft.playwright.FrameLocator;
-import com.microsoft.playwright.Locator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +20,25 @@ public class IFramesPageTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("IFrames test")
-    void iFramesTest() {
-        FrameLocator iframe = page.frameLocator("#my-iframe");
-        Locator paragraphs = iframe.locator("p");
-
-        paragraphs.first().waitFor();
-        assertThat(paragraphs.count()).isEqualTo(20);
+    @DisplayName("Verify IFrames count test")
+    void verifyIFramesCountTest() {
+        assertThat(iFramePage.getParagraphsCount()).isEqualTo(20);
     }
 
+    @Test
+    @DisplayName("Verify paragraph content inside iframe")
+    void verifyParagraphContentInsideIframe() {
+
+        iFramePage.waitForParagraphs(0);
+        assertThat(iFramePage.isParagraphVisible(0)).isTrue();
+        assertThat(iFramePage.getParagraphText(0))
+                .isNotBlank()
+                .contains("Lorem ipsum");
+
+        assertThat(iFramePage.isParagraphVisible(4)).isTrue();
+        assertThat(iFramePage.getParagraphText(4))
+                .isNotBlank()
+                .contains("Lobortis luctus");
+        assertThat(iFramePage.isParagraphVisible(19)).isTrue();
+    }
 }
