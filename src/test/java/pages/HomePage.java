@@ -12,6 +12,7 @@ public class HomePage extends BasePage {
     private final Locator loginFormLink = page.locator("a[href='login-form.html']");
     private final Locator dragAndDropLink = page.locator("a[href='drag-and-drop.html']");
     private final Locator iFramesLink = page.locator("a[href='iframes.html']");
+    private final Locator framesLink = page.locator("a[href='frames.html']");
 
     public  HomePage(Page page) {
         super(page);
@@ -49,5 +50,11 @@ public class HomePage extends BasePage {
     public IFramePage openIFramePage() {
         iFramesLink.click();
         return new IFramePage(page);
+    }
+
+    @Step("Open Frames page")
+    public FramesPage openFramesPage(){
+        framesLink.click();
+        return new FramesPage(page);
     }
 }
